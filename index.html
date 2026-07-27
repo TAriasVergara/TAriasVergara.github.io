@@ -201,6 +201,48 @@
         Name in <strong>bold</strong> indicates T. Arias-Vergara.
       </p>
 
+      <h3 class="sub">Publication Summary</h3>
+      <p class="pub-stats-meta">
+        h-index <strong>23</strong> <span class="muted">(15 July 2026)</span>
+        · 92 published works · Cumulative JIF <strong>111.8</strong>
+      </p>
+      <div class="table-scroll">
+        <table class="pub-table">
+          <caption class="sr-only">Number of authored and co-authored works by publication type.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Publication type</th>
+              <th scope="col">Status</th>
+              <th scope="col">Total</th>
+              <th scope="col">First-author</th>
+              <th scope="col">Co-authorships</th>
+              <th scope="col">Senior authorships</th>
+              <th scope="col">Cumulative JIF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Published journals</td><td>Published</td><td>31</td><td>7</td><td>22</td><td>2</td><td>111.8</td></tr>
+            <tr><td>Journals under review</td><td>Preprint</td><td>2</td><td>2</td><td>0</td><td>0</td><td>—</td></tr>
+            <tr><td>Conferences</td><td>Published</td><td>60</td><td>12</td><td>43</td><td>5</td><td>—</td></tr>
+            <tr><td>Conferences under review</td><td>Under review</td><td>5</td><td>0</td><td>5</td><td>0</td><td>—</td></tr>
+            <tr><td>Books</td><td>Published</td><td>1</td><td>1</td><td>0</td><td>0</td><td>—</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">Total published publications</th>
+              <td>Published only</td><td>92</td><td>20</td><td>65</td><td>7</td><td>111.8</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <p class="pub-note pub-table-note">
+        Senior authorship denotes a last-author position; co-authorship a non-first, non-last position.
+        The sole-authored book is counted as a first-author publication. arXiv preprints are grouped under
+        &ldquo;Journals under review&rdquo; and are excluded from the published-publication total and cumulative JIF.
+        The cumulative JIF is the article-weighted sum of the latest 2025 Journal Impact Factors (released June 2026);
+        journals without a reported JIF are assigned 0. Conference papers, preprints, and books are not assigned JIFs.
+      </p>
+
       <div class="year-group">
         <h3 class="year">2026</h3>
         <ol class="pubs">
@@ -249,6 +291,15 @@
         </ol>
       </div>
 
+      <div class="pub-toggle-wrap">
+        <button type="button" id="pubToggle" class="pub-toggle"
+                aria-expanded="true" aria-controls="pubs-more">
+          <span class="label">Show fewer publications</span>
+          <span class="chev" aria-hidden="true">&#9662;</span>
+        </button>
+      </div>
+
+      <div id="pubs-more">
       <div class="year-group">
         <h3 class="year">2024</h3>
         <ol class="pubs">
@@ -335,6 +386,7 @@
           <li><strong>T. Arias-Vergara</strong>, J. C. Vásquez-Correa, J. R. Orozco-Arroyave, J. F. Vargas-Bonilla, T. Haderlein, E. Nöth. <span class="pt">Gender-dependent GMM-UBM for tracking Parkinson's disease progression from speech.</span> <em>ITG Sprachkommunikation 2016</em>.</li>
         </ol>
       </div>
+      </div><!-- /#pubs-more -->
 
       <p class="pub-note">A complete, continuously updated list is maintained on
         <a href="https://lme.tf.fau.de/person/arias/" target="_blank" rel="noopener">the FAU Pattern Recognition Lab page</a>,
@@ -415,6 +467,27 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Publications: expand / collapse older year-groups (progressive enhancement)
+  (function(){
+    var more = document.getElementById('pubs-more');
+    var btn  = document.getElementById('pubToggle');
+    if (!more || !btn) return;
+    var hidden = more.querySelectorAll('ol.pubs > li').length;
+    var label  = btn.querySelector('.label');
+    function setState(expanded){
+      more.classList.toggle('is-collapsed', !expanded);
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      label.textContent = expanded
+        ? 'Show fewer publications'
+        : 'Show all publications (' + hidden + ' more)';
+    }
+    setState(false); // collapsed by default once JS is available
+    btn.addEventListener('click', function(){
+      setState(btn.getAttribute('aria-expanded') !== 'true');
+    });
+  })();
+
   // Smooth-scroll for in-page nav
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
